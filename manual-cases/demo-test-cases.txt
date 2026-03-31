@@ -1,0 +1,114 @@
+Test Case ID: TC_LOGIN_001
+Title: Valid login with correct credentials
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "test@example.com" in the Email field
+  3. Enter "Test@123" in the Password field
+  4. Click the "Login" button
+Expected Result: User is redirected to the dashboard and sees "Welcome" message
+
+Test Case ID: TC_LOGIN_002
+Title: login with incorrect email
+Preconditions: User account does not exist with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "test@example.com" in the Email field
+  3. Enter "Test@123" in the Password field
+  4. Click the "Login" button
+Expected Result: User is shown some incorrect message "Incorrect email/password, if you are a new user, you can use sign up below".
+Note: System must NOT reveal whether the email or password 
+specifically is wrong. A generic message prevents credential 
+enumeration attacks.
+
+Test Case ID: TC_LOGIN_003
+Title: login with incorrect password
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "test@example.com" in the Email field
+  3. Enter "incorrect" in the Password field
+  4. Click the "Login" button
+Expected Result: User is shown "incorrect email/password". user stays in the login page.
+
+Test Case ID: TC_LOGIN_004
+Title: Login attempt with empty email field.
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter nothing in the Email field
+  3. Enter "Test@123" in the Password field
+  4. Click the "Login" button
+Expected Result: User is shown "Empty Email" Or "Email is empty" in the login form itself.
+
+Test Case ID: TC_LOGIN_005
+Title: Login attempt with empty password field.
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "test@example.com" in the Email field
+  3. Enter nothing in the Password field
+  4. Click the "Login" button
+Expected Result: User is shown "Empty Password" or "Password is empty" in the login form itself.
+
+
+Test Case ID: TC_LOGIN_006
+Title: Login attempt with all empty field.
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter nothing in the Email field
+  3. Enter nothing in the Password field
+  4. Click the "Login" button
+Expected Result: User is shown "Email is empty" and "Password is empty" in the login form itself.
+
+Test Case ID: TC_LOGIN_007
+Title: Login attempt with known SQL attack vulnerablity
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter ' OR 1=1 --  in the Email field
+  3. Enter ' OR 1=1 -- in the Password field
+  4. Click the "Login" button
+
+Expected Result: User is shown "incorrect email/password". user stays in the login page.
+
+
+Test Case ID: TC_LOGIN_008
+Title: Login attempt with very long email
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "verylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemailverylongemail@example.com" in the Email field
+  3. Enter "Test@123" in the Password field
+  4. Click the "Login" button
+
+Expected Result: The system rejects the input and displays a validation error. 
+User remains on the login page. The application does not crash or throw a 
+server error (no 500 response).
+
+Test Case ID: TC_LOGIN_009
+Title: Login attempt with All caps Email
+Preconditions: User account exists with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "TEST@EXAMPLE.COM"  in the Email field
+  3. Enter "Test@123" in the Password field
+  4. Click the "Login" button
+
+Expected Result: User is redirected to the dashboard and sees "Welcome" message.
+Note: the email in all caps should be deemed as a correct email, system should work with email as case insensitive.
+
+
+Test Case ID: TC_LOGIN_010
+Title: login with incorrect email multiple times
+Preconditions: User account does not exist with email test@example.com / password Test@123
+Steps:
+  1. Navigate to https://example.com/login
+  2. Enter "test@example.comasdf" in the Email field
+  3. Enter "Test@123" in the Password field
+  4. Click the "Login" button
+  5. repeate steps 2 to 4 for 5 times
+Expected Result: User should be blocked for some time to use the login form. the form should say "Too many invalid attempts".
+Note: Also verify the lockout is time-based (e.g. unlocks after 15 minutes) 
+or requires manual admin unlock, depending on the system's security policy.
