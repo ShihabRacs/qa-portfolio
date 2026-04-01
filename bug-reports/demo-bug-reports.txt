@@ -1,0 +1,53 @@
+Bug ID: BUG_001
+Title: Login form accepts SQL injection input and returns 500 error
+Environment: Chrome 124, Windows 11, Staging server v2.3.1
+Severity: Critical
+Priority: High
+
+Steps to Reproduce:
+  1. Navigate to https://example.com/login
+  2. Enter ' OR 1=1 -- in the Email field
+  3. Enter ' OR 1=1 -- in the Password field
+  4. Click the Login button
+
+Expected Result: 
+  System displays "Incorrect email/password" and user remains on login page.
+
+Actual Result: 
+  Server returns HTTP 500 Internal Server Error. 
+  The page crashes and displays a raw stack trace.
+
+Attachments: screenshot_bug001.png, network_log_bug001.har
+
+Additional Notes:
+  Tested on Firefox 125 — same result. 
+  Likely indicates SQL queries are not parameterised.
+  
+  
+Bug ID: BUG_002
+Title: Login form silently refreshes when password field is empty — 
+       no validation error displayed
+Environment: Chrome 124, Windows 11, Staging server v2.3.1
+Severity: Medium
+Priority: High
+
+Steps to Reproduce:
+  1. Navigate to https://example.com/login
+  2. Enter "test@example.com" in the Email field
+  3. Leave the Password field empty
+  4. Click the Login button
+
+Expected Result:
+  An inline validation error "Password is required" appears below 
+  the Password field. The form does not submit.
+
+Actual Result:
+  No error message is displayed. The login page silently refreshes. 
+  The user receives no feedback that the password field is required.
+
+Attachments: screenshot_bug002.png, network_log_bug002.har, console_log_002.txt
+
+Additional Notes:
+  Reproduced on Firefox 125. Client-side validation for the password 
+  field appears to be missing — the form submits to the server with 
+  an empty payload rather than validating locally before submission.
